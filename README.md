@@ -3,6 +3,6 @@ group 1
 by
 Loreta Bolsevica
 Liene Malkalne
-Dace Dreimane
+Dace Dresmane
 Antra Bagone
 Anda Paegle Kadike
