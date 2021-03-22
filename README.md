@@ -1,6 +1,9 @@
 She Goes Tech DevOps Final Project
-group 1 
+
+Ansible Ants Quintet 
+
 by
+
 Loreta Bolsevica
 Liene Malkalne
 Dace Dresmane
