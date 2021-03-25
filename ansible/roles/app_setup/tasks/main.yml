@@ -1,0 +1,13 @@
+---
+- name: Clone a private repository into /opt.
+  git:
+    repo: ssh://git@github.com:LoretaB/Practical_assignments.git
+    version: master
+    dest: /opt/private-repo
+    accept_hostkey: yes
+    clone: yes
+    # ssh-agent doesn't allow key to pass through remote sudo commands.
+  become: java_user
+
+#-git checkout
+#-java compile and run

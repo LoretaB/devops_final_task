@@ -1,0 +1,6 @@
+- hosts: monitoring
+  become: true
+  roles:
+    - install
+    - create_user
+    - app_setup
