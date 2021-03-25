@@ -1,13 +1,24 @@
----
-- name: Clone a private repository into /opt.
-  git:
-    repo: ssh://git@github.com:LoretaB/Practical_assignments.git
-    version: master
-    dest: /opt/private-repo
-    accept_hostkey: yes
-    clone: yes
-    # ssh-agent doesn't allow key to pass through remote sudo commands.
-  become: java_user
+#---
+#- name: Git checkout
+#  git:
+#    repo: ssh://git@github.com/mylogin/hello.git
+#    dest: "/home/project_hello"
+#    become: yes
+#    become_user: java_user
+#
+#- name: Download Java code from Git repository
+#  git:
+#    repo: ssh://git@github.com/mylogin/hello.git
+#    dest: "/home/project_hello"
+#    version: master
+#    key_file: /home/java_user/.ssh/id_rsa
+#    become: yes
+#    become_user: java_user
 
-#-git checkout
-#-java compile and run
+#- name: Compile java program
+#  shel: javac /home/project_hello/filename.java
+#    become: yes
+#    become_user: java_user
+#
+#- name: Run the java program
+#  shel: java /home/project_hello/filename

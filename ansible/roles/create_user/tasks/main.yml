@@ -1,18 +1,51 @@
----
-- name: create user
+#-user name
+#-sudo
+#-ssh keys
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: Create user java_user
   user:
     name: java_user
-    shell: /bin/bash
+    groups: wheel
     append: yes
-    home: /home/java_user
+    state: present
 
-- name: Create a 2048-bit SSH key for user java_user in ~java_user/.ssh/id_rsa
-  user:
-    name: java_user
-    generate_ssh_key: yes
-    ssh_key_bits: 2048
-    ssh_key_file: .ssh/id_rsa
+- name: Creating ssh directory
+  file:
+    path: /home/java_user/.ssh
+    state: directory
+    owner: java_user
+    group: java_user
+    mode: '0700'
 
- # user name
-#- sudo
-#- ssh keys
+- name: Uploading ssh keys
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: java_user
+    group: java_user
+  loop:
+    - { src: "java_user", dest: "/home/java_user/.ssh" }
+    - { src: "java_user.pub", dest: "/home/java_user/.ssh" }
+
+- name: add SSH key with user java_user
+  shell: ssh-add -k /home/java_user/.ssh/java_user
+  become_user: java_user
+
+
+
+
+
+#- name: Ansible copy
+#    copy:
+#      src: java_user.pub
+#      dest: /home/java_user/.ssh
+#
+#- name: Ansible copy
+#    copy:
+#      src: java_user
+#      dest: /home/java_user/.ssh
