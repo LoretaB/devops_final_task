@@ -1,10 +1,11 @@
-#---
-#- name: Git checkout
-#  git:
-#    repo: ssh://git@github.com/mylogin/hello.git
-#    dest: "/home/project_hello"
-#    become: yes
-#    become_user: java_user
+---
+- name: Git checkout
+  git:
+    repo: git@github.com:liene-ma/GroupProject.git
+    dest: "/home/project_pub"
+    become: yes
+    become_user: java_user
+
 #
 #- name: Download Java code from Git repository
 #  git:
