@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 - name: Git checkout
 git:
@@ -24,3 +25,5 @@ git:
 - name: Run the java program
   shell: java /home/project_hello/filename
 
+
+# 831baf81e59e926e1a5eb2e5d1156d85a6b1ef05
