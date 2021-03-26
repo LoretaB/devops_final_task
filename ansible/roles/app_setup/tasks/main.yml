@@ -1,11 +1,32 @@
 #---
+- name: Creating git project directory
+  file:
+    path: /home/java_user/Practical_assignments
+    state: directory
+    owner: java_user
+    group: wheel
+    mode: 0770
+
+- name: Git checkout
+  git:
+    repo: git@github.com:LoretaB/Practical_assignments.git
+    dest: /home/java_user/Practical_assignments/
+    accept_hostkey: yes
+    key_file: /home/java_user/.ssh/java_user
+  become: yes
+  become_user: java_user
+
+
 #- name: Git checkout
 #  git:
-#    repo: ssh://git@github.com/mylogin/hello.git
-#    dest: "/home/project_hello"
-#    become: yes
-#    become_user: java_user
-#
+#    repo: git@github.com:LoretaB/Practical_assignments.git
+#    dest: "/home/Practical_assignments"
+#    version: master
+#    accept_hostkey: yes
+#    key_file: /home/java_user/.ssh/java_user
+#  become: yes
+#  become_user: java_user
+
 #- name: Download Java code from Git repository
 #  git:
 #    repo: ssh://git@github.com/mylogin/hello.git
