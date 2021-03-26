@@ -9,3 +9,9 @@
     name: java-11-openjdk
     state: present
     update_cache: yes
+
+- name: install java - devel
+  package:
+    name: java-1.7.0-openjdk-devel
+    state: present
+    update_cache: yes
