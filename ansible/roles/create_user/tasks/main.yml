@@ -19,7 +19,7 @@
     path: /home/java_user/.ssh
     state: directory
     owner: java_user
-    group: java_user
+    group: wheel
     mode: '0700'
 
 - name: Uploading ssh keys
@@ -27,7 +27,7 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: java_user
-    group: java_user
+    group: wheel
     mode: 0400
   loop:
     - { src: "java_user", dest: "/home/java_user/.ssh" }

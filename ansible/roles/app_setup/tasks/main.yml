@@ -17,6 +17,17 @@
   remote_user: java_user
 
 
+- name: compile java file
+  shell: /usr/lib/jvm/java-1.8.0/bin/javac /home/java_user/GroupProject/src/com/company/PubGroupProject.java
+
+
+
+- name: run java file
+  shell: java /home/java_user/GroupProject/src/com/company/PubGroupProject
+
+
+
+
 
 #
 #- name: Download Java code from Git repository
