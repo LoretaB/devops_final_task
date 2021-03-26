@@ -9,3 +9,14 @@
     name: java-11-openjdk
     state: present
     update_cache: yes
+
+- name: install java - devel
+  package:
+    name: java-1.7.0-openjdk-devel
+    state: present
+    update_cache: yes
+
+
+- name: add java_home to environment
+  lineinfile: dest=/etc/environment line='JAVA_HOME="/usr/lib/jvm/java-1.8.0/bin"'
+

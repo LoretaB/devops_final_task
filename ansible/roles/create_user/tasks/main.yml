@@ -1,27 +1,8 @@
-#-user name
-#-sudo
-#-ssh keys
-
+---
 - name: Make sure we have a 'wheel' group
   group:
     name: wheel
     state: present
-
-- name: Allow 'wheel' group to have passwordless sudo
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-
-- name: Add java_user to wheel group
-  user:
-   name: java_user
-   group: wheel
-   append: yes
-   state: present
-   createhome: yes
 
 - name: Creating ssh directory
   file:
@@ -29,7 +10,6 @@
     state: directory
     owner: java_user
     group: wheel
-    #mode: 0700
 
 - name: Uploading ssh keys
   copy:
