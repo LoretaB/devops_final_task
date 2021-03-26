@@ -1,11 +1,12 @@
+---
 - name: install git
   package:
     name: git
     state: present
     update_cache: yes
 
-- name: install OpenJDK 11 JRE
+- name:  install java - devel
   package:
-    name: java-11-openjdk
+    name: java-1.7.0-openjdk-devel
     state: present
     update_cache: yes

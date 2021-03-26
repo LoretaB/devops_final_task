@@ -10,7 +10,7 @@
 - name: Create user java_user
   user:
     name: java_user
-    groups: wheel
+    group: wheel
     append: yes
     state: present
 
@@ -19,7 +19,7 @@
     path: /home/java_user/.ssh
     state: directory
     owner: java_user
-    group: java_user
+    group: wheel
     mode: '0700'
 
 - name: Uploading ssh keys
@@ -27,13 +27,16 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: java_user
-    group: java_user
+    group: wheel
+    mode: 0400
   loop:
     - { src: "java_user", dest: "/home/java_user/.ssh" }
     - { src: "java_user.pub", dest: "/home/java_user/.ssh" }
 
 - name: add SSH key with user java_user
-  shell: ssh-add -k /home/java_user/.ssh/java_user
+  shell: |
+    eval "$(ssh-agent)"
+    ssh-add -k /home/java_user/.ssh/java_user
   become_user: java_user
 
 
