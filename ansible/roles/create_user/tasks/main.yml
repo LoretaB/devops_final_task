@@ -34,12 +34,10 @@
     - { src: "java_user.pub", dest: "/home/java_user/.ssh" }
 
 - name: add SSH key with user java_user
-  become: yes
-  become_user: java_user
   shell: |
     eval "$(ssh-agent)"
     ssh-add -k /home/java_user/.ssh/java_user
-
+  become_user: java_user
 
 
 
