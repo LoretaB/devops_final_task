@@ -1,4 +1,4 @@
-#---
+---
 - name: Creating git project directory
   file:
     path: /home/java_user/Practical_assignments
@@ -16,7 +16,7 @@
   become: yes
   become_user: java_user
 
-- name: 'Add java_home to environment'
+- name: Add java_home to environment
   lineinfile:
     path: /etc/environment
     line: JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk"
@@ -26,12 +26,12 @@
   shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
   become_user: java_user
 
-- name: 'Add classpath'
+- name: Add classpath
   shell: export CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-1.7.0-openjdk
   args:
     executable: /bin/bash
 
-- name: 'Reload environment'
+- name: Reload environment
   shell: source /etc/environment
   args:
     executable: /bin/bash

@@ -4,6 +4,13 @@
     name: wheel
     state: present
 
+- name: Create user java_user
+  user:
+    name: java_user
+    group: wheel
+    append: yes
+    state: present
+
 - name: Creating ssh directory
   file:
     path: /home/java_user/.ssh
