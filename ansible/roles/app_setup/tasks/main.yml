@@ -1,48 +1,45 @@
 ---
-- name: Create directory GroupProject
+- name: Creating git project directory
   file:
-    path: /home/java_user/GroupProject
+    path: /home/java_user/Practical_assignments
     state: directory
     owner: java_user
     group: wheel
     mode: 0770
 
 - name: Git checkout
-git:
-  repo: git@github.com:LoretaB/Practical_assignments.git
-  dest: /home/java_user/Practical_assignments/
-  version: master
-  accept_hoskey: yes
-  key_file: /home/java_user/.ssh/java_user
-  remote_user: java_user
+  git:
+    repo: git@github.com:LoretaB/Practical_assignments.git
+    dest: /home/java_user/Practical_assignments/
+    accept_hostkey: yes
+    key_file: /home/java_user/.ssh/java_user
+  become: yes
+  become_user: java_user
 
-  - name: Download Java code from Git repository
-      git:
-        repo: git@github.com:LoretaB/Practical_assignments.git
-        dest: /home/java_user/Practical_assignments/
-        version: master
-        key_file: /home/java_user/.ssh/id_rsa
-        become: yes
-        become_user: java_user
+- name: 'Add java_home to environment'
+  lineinfile:
+    path: /etc/environment
+    line: JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk"
 
-  - name: add java_home to environment
-      lineinfile: dest=/etc/environment line='JAVA_HOME="/usr/lib/jvm/java-1.8.0/bin"'
 
-  - name: Compile java programm
-      shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
-      become_user: java_user
+- name: Compile java programm
+  shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
+  become_user: java_user
 
-  - name: Add classpath
-      shell: export CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-1.8.0/bin
-      args:
-        executable: /bin/bash
-      become_user: java_user
+- name: 'Add classpath'
+  shell: export CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-1.7.0-openjdk
+  args:
+    executable: /bin/bash
 
-  - name: Reload environment
-      shell: source /etc/environment
-      args:
-        executable: /bin/bash
+- name: 'Reload environment'
+  shell: source /etc/environment
+  args:
+    executable: /bin/bash
 
-  - name: Execute java programm
-      shell: java /home/java_user/Practical_assignments/OOP_tasks/src/Task1/Main
-      become_user: java_user
+- name: Change the working directory and run the command as java_user
+  shell: java Main
+  register: out
+  become_user: java_user
+  args:
+    chdir: /home/java_user/Practical_assignments/OOP_tasks/src/Task1
+- debug: var=out.stdout_lines
