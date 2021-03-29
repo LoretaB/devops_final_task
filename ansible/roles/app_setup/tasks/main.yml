@@ -41,4 +41,5 @@
   become_user: java_user
   args:
     chdir: /home/java_user/Practical_assignments/OOP_tasks/src/Task1
+
 - debug: var=out.stdout_lines
