@@ -21,7 +21,6 @@
     path: /etc/environment
     line: JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk"
 
-
 - name: Compile java programm
   shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
   become_user: java_user
