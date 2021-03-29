@@ -16,21 +16,30 @@
   become: yes
   become_user: java_user
 
+- name: 'Add java_home to environment'
+  lineinfile:
+    path: /etc/environment
+    line: JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk"
+  become_user: java_user
+
 - name: Compile java programm
   shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
   become_user: java_user
 
-- name: Add classpath
-  shell: export CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-1.8.0/bin
+- name: 'Add classpath'
+  shell: export CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-1.7.0-openjdk
   args:
     executable: /bin/bash
-  become_user: java_user
 
-- name: Reload environment
+- name: 'Reload environment'
   shell: source /etc/environment
   args:
     executable: /bin/bash
 
-- name: Execute java programm
-  shell: java /home/java_user/Practical_assignments/OOP_tasks/src/Task1/Main
+- name: Change the working directory and run the command as java_user
+  shell: java Main
+  register: out
   become_user: java_user
+  args:
+    chdir: /home/java_user/Practical_assignments/OOP_tasks/src/Task1
+- debug: var=out.stdout_lines
