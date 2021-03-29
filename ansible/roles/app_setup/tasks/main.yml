@@ -1,4 +1,4 @@
-#---
+---
 - name: Creating git project directory
   file:
     path: /home/java_user/Practical_assignments
@@ -20,7 +20,6 @@
   lineinfile:
     path: /etc/environment
     line: JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk"
-  become_user: java_user
 
 - name: Compile java programm
   shell: javac /home/java_user/Practical_assignments/OOP_tasks/src/Task1/*.java
