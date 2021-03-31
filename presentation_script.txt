@@ -2,12 +2,19 @@ Project presentation
 
 	1.	Task -
 
-To create a virtual computer with Centos operating system using Vagrant and Virtual Box. Prepare the environment with Git and Java JDK.
-Create a new user on the virtual machine and tell that user to connect to a GitHub repository using a set of SSH keys, download a Java file from that repository and compile and run the file.
+    To create a virtual computer with Centos operating system using Vagrant and Virtual Box. Prepare the environment with
+    Git and Java JDK.
+    Create a new user on the virtual machine and tell that user to connect to a GitHub repository using a set of SSH keys,
+    download a Java file from that repository and compile and run the file.
 
 	2.	Work flow -
-so what we did was first create a Github repository so that everyone has access to the project and clone the repo and check out branches for each team member.
-when that was up and running we created the basic structure of the project:
+    we settled on a group name Ansible Ants for two reasons first one was because rhymes together and sounds catchy
+    and the second one is because ants are very hard working creatures and are able to solve big problems.
+    we did consider naming our group after a led zeppelin song as ansible versions are named in this manner.
+    so what we did was first create a Github repository so that everyone has access to
+    the project and clone the repo and check out branches for each team member.
+    when that was up and running we created the basic structure of the project:
+
 	* vagrant file to configure the virtual machine and and provision the machine using Ansible
 	* Ansible: playbook.yml, inventory, roles -install, create user, app_setup
 	* Task division and start working
@@ -18,31 +25,46 @@ when that was up and running we created the basic structure of the project:
     * Playbook.yml - to tell where (hosts=server named monitoring) with and what will be done in our case the 3 roles
     * Inventory the ip address for the server from the vagrant file
     * Roles
-        * Install - we had to make sure our virtual machine was configured to use Git and Java so we installed these two and then somewhere along the way we had to add the Java library kit for developers.
+        * Install - we had to make sure our virtual machine was configured to use Git and Java so we installed these
+        two and then somewhere along the way we had to add the Java library kit for developers.
 
 	4. 	Liene about slide 7 -
 
     * this is the step where our struggle began - we started by creating the user using a simple Ansible module,
-    * but this was not enough so to make sure that our new java_user can gain access to administrator levels we added it to the wheel group
-    * Next was the SSH keys - I generated a set of SSH keys on my terminal and then proceeded to copy them in the files directory in the ansible playbook for further use.
+    * but this was not enough so to make sure that our new java_user can gain access to administrator levels we added
+        it to the wheel group
+    * Next was the SSH keys - I generated a set of SSH keys on my terminal and then proceeded to copy them in the files
+        directory in the ansible playbook for further use.
     * We created a directory for storing the SSH keys on the virtual machine and uploaded them to that location.
-    * the last part was to add the set of SSH keys to the java_user, and after a bit of research this was achieved by using 2 shell commands and modifying some permissions (from 700 to 400)
+    * the last part was to add the set of SSH keys to the java_user, and after a bit of research this was achieved by
+        using 2 shell commands and modifying some permissions (from 700 to 400)
 
 	5. Anda about slide 8 -
 
-    * the next step was to make sure our java_user can checkout and clone a project, that we had previously worked on using Java from GitHub.
+    * the next step was to make sure our java_user can checkout and clone a project, that we had previously worked on
+        using Java from GitHub.
     * we created a directory on the virtual machine where the project will be saved
     * on GitHub we provided the public SSH key under deployment keys for the project
     * and then we checked out the project using the SSH keys, always making sure it is done using the java_user
 
 	6. Loreta about slide 9 -
 
-    * at this point we were already seeing the finish line as there were only 2 things left to do - compile and run the java file which was now successfully downloaded to our virtual machine; the idea was to use javac to compile and java to run
-    * so first we compiled the java file using the shell command javac and the full path to the file location
-    * at this point we had to install the additional library develop kit
-    * then we ran the file by using the shell command java and changing the directory to the file location
-    * To successfully execute the file we had to adjust our environment a bit
-    * Classpath
-    * Environment
-    * and lastly to get the results we used the debug
-
+    * at this point we were already seeing the finish line as there were only 2 things left to do - compile and run
+        the java file which was now successfully downloaded to our virtual machine
+    * the idea was to use javac to compile and java to run
+    * as we encountered a problem, that performing compilation “javac” was not found, we had to install additional
+        library – java development kit and set Java_home environment variable, that pointed to the directory, where the
+        Java Runtime Environment was installed on our virtual machine
+    * after that with next task we compiled the java file using the shell command javac
+    * in the next task we added Classpath, which is an environmental variable, used by Application ClassLoader to
+        locate and load java class files
+    * then we reloaded environment and final task was to run java program
+    * to perform this task successfully and to see the results, we added parameter “chdir” to Ansible shell module, to
+        change into this directory before running the command “java”
+    * we also used task keyword “register” to create variable from the output of this Ansible task
+    * After that we used this variable in a parameter “var” of Ansible debug module, that prints statements during
+        task execution
+    * And stdout_lines return value provides a list of strings, each containing one item per line from the original
+        output
+    * So we can see the result.
+    * And we would like to show you, how it works, performing vagrant provision.
