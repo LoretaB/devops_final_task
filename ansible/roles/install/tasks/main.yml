@@ -1,20 +1,31 @@
-- name: install git
+---
+- name: install environment
   package:
-    name: git
     state: present
-    update_cache: yes
+    name: "{{ item }}"
+  loop:
+      - git
+      - java-11-openjdk
+      - java-1.7.0-openjdk-devel
 
-- name: install OpenJDK 11 JRE
-  package:
-    name: java-11-openjdk
-    state: present
-    update_cache: yes
+#- name: install git
+ # package:
+  #  name: git
+   # state: present
+    #update_cache: yes
 
-- name: install java - devel
-  package:
-    name: java-1.7.0-openjdk-devel
-    state: present
-    update_cache: yes
+#- name: install OpenJDK 11 JRE
+ # package:
+  #  name: java-11-openjdk
+   # state: present
+    #update_cache: yes
+
+#- name: install java - devel
+ # package:
+  #  name: java-1.7.0-openjdk-devel
+   # state: present
+    #update_cache: yes
+
 
 
 
